@@ -21,6 +21,7 @@ import org.json.simple.parser.ParseException;
  * @author Administrator
  */
 public class NewJFrame2 extends javax.swing.JFrame {
+    JSONObject jsonObject;
     
 
     /**
@@ -168,7 +169,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
             System.out.println(lat);
             
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(jsonData);
+            jsonObject = (JSONObject) parser.parse(jsonData);
     
             JSONObject mainObject = (JSONObject) jsonObject.get("main");
             double temperature = (double) mainObject.get("temp");
@@ -188,8 +189,10 @@ public class NewJFrame2 extends javax.swing.JFrame {
             {
              m.printStackTrace(); 
             }
-        
-    NewJFrame4 newFrame = new NewJFrame4(jsonObject);
+
+    JSONObject js =new JSONObject();
+    js=jsonObject;    
+    NewJFrame4 newFrame = new NewJFrame4(js);
     newFrame.setVisible(true);
     this.setVisible(false); // Hide the current frame
     }//GEN-LAST:event_jButton1ActionPerformed

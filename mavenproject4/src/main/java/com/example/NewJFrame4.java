@@ -4,7 +4,7 @@
  */
 package com.example;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -25,9 +25,9 @@ public class NewJFrame4 extends javax.swing.JFrame {
         initComponents();
     }
 
-    public NewJFrame4(JSONObject jsonObjectt)
+    public NewJFrame4(JSONObject js)
     {
-        jsonObject=jsonObjectt;
+        jsonObject=js;
         initComponents();
     }
 
@@ -56,10 +56,10 @@ public class NewJFrame4 extends javax.swing.JFrame {
             double feels_like = (double) mainObject.get("feels_like");
             double temp_min = (double) mainObject.get("temp_min");
             double temp_max = (double) mainObject.get("temp_max");
-            double pressure = (double) mainObject.get("pressure");
-            double humidity = (double) mainObject.get("humidity");
-            double sea_level = (double) mainObject.get("sea_level");
-            double grnd_level= (double) mainObject.get("grnd_level");
+            long pressure = (long) mainObject.get("pressure");
+            long humidity = (long) mainObject.get("humidity");
+            long sea_level = (long) mainObject.get("sea_level");
+            long grnd_level= (long) mainObject.get("grnd_level");
 
 
 

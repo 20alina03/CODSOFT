@@ -4,11 +4,27 @@
  */
 package com.example;
 
+import java.util.Scanner;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author Administrator
  */
 public class NewJFrame3 extends javax.swing.JFrame {
+
+    JSONObject jo;
 
     /**
      * Creates new form NewJFrame3
@@ -96,17 +112,124 @@ public class NewJFrame3 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-    NewJFrame5 jf5= new NewJFrame5();
-        jf5.show();
+    // NewJFrame5 jf5= new NewJFrame5();
+    //     jf5.show();
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      NewJFrame4 newFrame = new NewJFrame4();
-    newFrame.setVisible(true);
-    this.setVisible(false); // Hide the current frame
-        // TODO add your handling code here:
+
+    public static String stream(URL url) 
+    {
+        StringBuilder json = new StringBuilder();
+    try (InputStream input = url.openStream()) {
+        InputStreamReader isr = new InputStreamReader(input);
+        BufferedReader reader = new BufferedReader(isr);
+       
+        int c;
+        while ((c = reader.read()) != -1) {
+            json.append((char) c);
+        }
+        return json.toString();
+    }
+    catch(IOException e)
+    {
+        e.printStackTrace();
+    }
+    return json.toString();
+
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        System.out.println("Button CLicked");
+        //GEN-FIRST:event_jButton1ActionPerformed
+        double lat=0,lon=0;
+
+        try {
+
+            System.out.println("Inside Try1");
+
+            String city=jTextField1.getText();
+
+            URL url= new URL("http://api.openweathermap.org/geo/1.0/direct?q="+city+"&limit=1&appid=f350f945d01ad5389e7d50882c4e61a5");
+            String jsonData = stream(url);   
+            System.out.println(jsonData);
+
+            JSONParser parser = new JSONParser();
+            JSONArray j_a = (JSONArray) parser.parse(jsonData);
+
+            JSONObject jaye_ho= (JSONObject) j_a.get(0);
+
+            double latt = (double) jaye_ho.get("lat");
+            double longg = (double) jaye_ho.get("lon");
+            System.out.println("Lat:"+latt);
+            lat=latt;
+            lon=longg;
+            System.out.println("Lon:"+longg);
+            
+
+        
+
+
+
+        
+
+    
+        
+    
+    
+            // lon = (String)jsonObject.get(1);
+
+         
+
+
+    
+            }
+            catch (ParseException e) {
+                e.printStackTrace();
+            }
+            catch(MalformedURLException m)
+            {
+             m.printStackTrace(); 
+            }
+
+
+
+
+        
+            try {
+               
+              
+                URL url= new URL("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=f350f945d01ad5389e7d50882c4e61a5");
+                String jsonData = stream(url);   
+
+                System.out.println("JSON KA DATAA:"+jsonData);
+                
+               
+                JSONParser parser = new JSONParser();
+                JSONObject jsonObject = (JSONObject) parser.parse(jsonData);
+                jo=jsonObject;
+        
+                
+            
+        
+                }
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                catch(MalformedURLException m)
+                {
+                 m.printStackTrace(); 
+                }
+            
+        NewJFrame5 newFrame = new NewJFrame5(jo);
+        newFrame.setVisible(true);
+        this.setVisible(false); 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+
+
+      // Hide the current frame
+        // TODO add your handling code here://GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
